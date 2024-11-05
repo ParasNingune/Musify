@@ -55,7 +55,7 @@ export default function MyLibrary() {
   return (
     <Box
       width={325}
-      height={655}
+      height={640}
       background="linear-gradient(145deg, rgba(15,15,15,1) 0%, rgba(32,31,31,1) 100%)"
       top={75}
       left={1}

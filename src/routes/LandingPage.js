@@ -7,29 +7,26 @@ import LeftBox from '../components/leftBox';
 export default function LandingPage() {
   const albums = [
     {
-      title: "Aaj Ki Raat (From 'Stree 2')",
-      artist: "Sachin-Jigar, Amitabh Bhattacharya",
-      image: "https://i.scdn.co/image/ab67616d00001e02b3c83a0d3204568b0535357c",
-    },
-    {
       title: "Aashiqui 2",
       artist: "Mithoon, Ankit Tiwari, Jeet Gannguli",
       image: "https://i.scdn.co/image/ab67616d0000b2736404721c1943d5069f0805f3",
+      link: '/album'
+    },
+    {
+      title: "Aaj Ki Raat (From 'Stree 2')",
+      artist: "Sachin-Jigar, Amitabh Bhattacharya",
     },
     {
       title: "Sajni (From 'Laapataa Ladies')",
       artist: "Ram Sampath, Arijit Singh, Prashant Pandey",
-      image: "https://i.ytimg.com/vi/k3g_WjLCsXM/maxresdefault.jpg",
     },
     {
       title: "GLORY",
       artist: "Yo Yo Honey Singh",
-      image: "https://images.genius.com/1ed8c12912f6484b531bbfb7fd5d6ba0.1000x1000x1.png",
     },
     {
       title: "ANIMAL",
       artist: "Manan Bhardwaj, Vishal Mishra, Jaani",
-      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcc00XUwrhiLWTyD6B2J0jx8GW-U2H2yQR9Q&s",
     },
   ];
 
@@ -42,22 +39,18 @@ export default function LandingPage() {
     {
       name: "Yo Yo Honey Singh",
       genre: "Artist",
-      image: "https://i.scdn.co/image/ab67616100005174bc7e4fffd515b47ff1ebbc1f",
     },
     {
       name: "Pritam",
       genre: "Artist",
-      image: "https://i.scdn.co/image/ab6761610000e5ebcb6926f44f620555ba444fca",
     },
     {
       name: "Atif Aslam",
       genre: "Artist",
-      image: "https://i.scdn.co/image/ab6761610000e5ebc40600e02356cc86f0debe84",
     },
     {
       name: "A.R. Rahman",
       genre: "Artist",
-      image: "https://i.scdn.co/image/ab67616100005174b19af0ea736c6228d6eb539c",
     },
     // More artists...
   ];
@@ -65,99 +58,72 @@ export default function LandingPage() {
   return (
     <Box
       width="100vw"
-      height="100vh"  // Outer container should fill the full viewport height
+      height="100vh"
       bg="black"
+      overflow="hidden"
     >
       <NavBar1 />
 
-      {/* Left Box */}
-      <LeftBox />
+      {/* Left Box, hidden on smaller screens */}
+      <Box display={{ base: 'none', md: 'block' }}>
+        <LeftBox />
+      </Box>
 
-      {/* Main Body (Scrollable) */}
+      {/* Main Body */}
       <Box
-        height="calc(100vh - 75px)"  // Adjust height to account for the fixed top components
-        width="77%"
-        bgGradient="linear(to-t, rgb(15,15,15), rgb(25,25,25))"
-        position="absolute"
-        top={75}
-        left={350}
-        borderRadius={20}
-        overflowY="auto"  // Make the main body scrollable
-        paddingBottom={10}  // Add bottom padding so content is not cut off
+        height={{ base: "auto", md: "calc(100vh - 150px)" }}
+        width={{ base: "100%", md: "77%" }}
+        bgGradient="linear(to-t, rgb(10,10,10), rgb(30,30,30))"
+        position="relative"
+        top={{ base: 0, md: 2 }}
+        left={{ base: 0, md: 350 }}
+        borderRadius={{ base: 0, md: 20 }}
+        overflowY={{ base: "visible", md: "auto" }}
+        p={{ base: 5, md: 8 }}
+        boxShadow="xl"
       >
         {/* Category Buttons */}
-        <Box position="relative" paddingY={4}>
-          <Button
-            borderRadius={100}
-            fontSize={14}
-            fontWeight={800}
-            size="sm"
-            ml={5}
-            backgroundColor="rgb(42,41,41)"
-            color="white"
-            _hover={{ backgroundColor: 'white', color: 'black' }}
-          >
-            All
-          </Button>
-          <Button
-            borderRadius={100}
-            fontSize={14}
-            fontWeight={800}
-            size="sm"
-            ml={4}
-            backgroundColor="rgb(42,41,41)"
-            color="white"
-            _hover={{ backgroundColor: 'white', color: 'black' }}
-          >
-            Music
-          </Button>
-          <Button
-            borderRadius={100}
-            fontSize={14}
-            fontWeight={800}
-            size="sm"
-            ml={4}
-            backgroundColor="rgb(42,41,41)"
-            color="white"
-            _hover={{ backgroundColor: 'white', color: 'black' }}
-          >
-            Podcast
-          </Button>
+        <Box display="flex" gap={4} mt={-2} ml={-5} justifyContent="start" flexWrap="wrap">
+          {['All', 'Music', 'Podcast'].map((category) => (
+            <Button
+              key={category}
+              borderRadius="full"
+              fontSize={14}
+              fontWeight={700}
+              backgroundColor="rgb(42,41,41)"
+              color="white"
+              px={4}
+              py={2}
+              _hover={{ bg: 'white', color: 'black' }}
+              boxShadow="0 4px 8px rgba(0,0,0,0.5)"
+            >
+              {category}
+            </Button>
+          ))}
         </Box>
 
         {/* Popular Albums */}
-        <Heading
-          color="white"
-          fontSize={22}
-          mt={8}
-          ml={5}
-          _hover={{ textDecoration: 'underline' }}
-        >
+        <Heading color="white" fontSize={24} mt={8} ml={5}>
           Popular Albums
         </Heading>
 
-        <Box overflowX="auto" width="100%" overflowY={'clip'}>
-          <SimpleGrid 
-            columns={5} 
-            spacing={1} 
-            minWidth="1000px" 
-            ml={3} 
-            mt={5}
-          >
+        <Box overflowX="auto" mt={5} mb={8} ml={3} overflowY={'hidden'}>
+          <SimpleGrid columns={{ base: 2, md: 3, lg: 5 }} spacing={4} minWidth="100%">
             {albums.map((album, index) => (
               <VStack
                 key={index}
                 borderRadius="lg"
+                boxShadow="lg"
+                _hover={{ transform: "scale(1.05)", transition: "0.3s ease" }}
                 overflow="hidden"
-                boxShadow="md"
-                _hover={{ transform: "scale(1.05)", transition: "0.2s" }}
+                maxWidth="220px"
               >
-                <Image src={album.image} alt={album.title} boxSize="225px" objectFit="cover" borderRadius={15}/>
-                <VStack align="start">
-                  <Text fontWeight="bold" noOfLines={2} color="white">
+                <Image src={album.image} alt={album.title} boxSize="220px" objectFit="cover" borderRadius={10}/>
+                <VStack align="start" spacing={1} p={3} bg="gray.800" width="100%">
+                  <Text fontWeight="bold" noOfLines={1} color="white" fontSize="lg">
                     {album.title}
                   </Text>
-                  <Text fontSize="sm" color="white">
+                  <Text fontSize="sm" color="gray.300" noOfLines={1}>
                     {album.artist}
                   </Text>
                 </VStack>
@@ -167,38 +133,27 @@ export default function LandingPage() {
         </Box>
 
         {/* Popular Artists */}
-        <Heading
-          color="white"
-          fontSize={22}
-          mt={8}
-          ml={5}
-          _hover={{ textDecoration: 'underline' }}
-        >
+        <Heading color="white" fontSize={24} mt={8} ml={5}>
           Popular Artists
         </Heading>
 
-        <Box overflowX="auto" width="100%" overflowY={'clip'}>
-          <SimpleGrid 
-            columns={5} 
-            spacing={1} 
-            minWidth="1000px" 
-            ml={3} 
-            mt={5}
-          >
+        <Box overflowX="auto" mt={5} mb={8} ml={3} overflowY={"clip"}>
+          <SimpleGrid columns={{ base: 2, md: 3, lg: 5 }} spacing={4} minWidth="100%">
             {artists.map((artist, index) => (
               <VStack
                 key={index}
                 borderRadius="lg"
+                boxShadow="lg"
+                _hover={{ transform: "scale(1.05)", transition: "0.3s ease" }}
                 overflow="hidden"
-                boxShadow="md"
-                _hover={{ transform: "scale(1.05)", transition: "0.2s" }}
+                maxWidth="220px"
               >
-                <Image src={artist.image} alt={artist.name} boxSize="225px" objectFit="cover" borderRadius={15}/>
-                <VStack align="start">
-                  <Text fontWeight="bold" noOfLines={2} color="white">
+                <Image src={artist.image} alt={artist.name} boxSize="220px" objectFit="cover" borderRadius={10}/>
+                <VStack align="start" spacing={1} p={3} bg="gray.800" width="100%">
+                  <Text fontWeight="bold" noOfLines={1} color="white" fontSize="lg">
                     {artist.name}
                   </Text>
-                  <Text fontSize="sm" color="white">
+                  <Text fontSize="sm" color="gray.300" noOfLines={1}>
                     {artist.genre}
                   </Text>
                 </VStack>
@@ -207,29 +162,19 @@ export default function LandingPage() {
           </SimpleGrid>
         </Box>
 
-        {/* Add space for new features */}
-        <Box mt={10}>
-          <Heading color="white" fontSize={22} ml={5} mb={4}>
-            Upcoming Features (Future Expansion)
+        {/* Upcoming Features */}
+        <Box mt={10} p={6} bg="gray.700" borderRadius="lg" mx={5} textAlign="center" boxShadow="lg">
+          <Heading color="white" fontSize={20} mb={4}>
+            Upcoming Features
           </Heading>
-          <Box
-            height="200px"
-            width="100%"
-            bg="gray.700"
-            borderRadius="lg"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            color="white"
-          >
-            New exciting features coming soon...
-          </Box>
+          <Text color="gray.300">Exciting new features coming soon...</Text>
         </Box>
       </Box>
 
       {/* Player */}
-      {/* <Player /> */}
+      <Box display={{ base: 'none', md: 'block' }}>
+        <Player />
+      </Box>
     </Box>
-
   );
 }
